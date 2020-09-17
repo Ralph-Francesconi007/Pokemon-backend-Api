@@ -1,7 +1,7 @@
 {
   "name": "express-api-template",
   "version": "0.0.1",
-  "description": "",
+  "description": "Pokemon",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -11,7 +11,7 @@
     "s": "nodemon server.js",
     "debug-server": "DEBUG=express:* nodemon server.js"
   },
-  "author": "",
+  "author": "Ralph",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.7",
@@ -20,7 +20,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.4.0",
-    "mongoose": "^5.8.1",
+    "mongoose": "^5.10.5",
     "passport": "^0.4.1",
     "passport-http-bearer": "^1.0.1"
   },
@@ -35,5 +35,20 @@
   "engines": {
     "node": "10.15.0",
     "npm": "6.4.1"
-  }
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ralph-Francesconi007/Pokemon-backend-client.git"
+  },
+  "keywords": [
+    "Pokemon"
+  ],
+  "bugs": {
+    "url": "https://github.com/Ralph-Francesconi007/Pokemon-backend-client/issues"
+  },
+  "homepage": "https://github.com/Ralph-Francesconi007/Pokemon-backend-client#readme"
 }
