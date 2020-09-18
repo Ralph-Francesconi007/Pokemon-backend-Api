@@ -10,6 +10,8 @@ const router = express.Router()
 // require passport
 const passport = require('passport')
 
+const pokemon = require('./../models/pokemon')
+
 // handle404 error
 const handle404 = require('./../../lib/custom_errors')
 
@@ -24,27 +26,26 @@ const requireToken = passport.authenticate('bearer', { session: false })
 
 // Create router
 router.post('/pokemon', requireToken, (req, res, next) => {
-  req.body.pokemon.owner = req.user.id
+  req.body.owner = req.user._id
+  const pokemonData = req.body.pokemon
 
   // use our Pokemon model
-  Pokemon.create(req.body.pokemon)
+  Pokemon.create(pokemonData)
   // pokemon created successfully
-    .then(pokemon => res.status(201).json({ pokemon: pokemon.toObject() }))
+    .then(pokemon => res.status(201).json({ pokemon }))
     // Create error
     .catch(next)
 })
 
 // Index router
 router.get('/pokemon', requireToken, (req, res, next) => {
-  // const pokemonData = req.body.pokemon
-
   Pokemon.find({owner: req.user.id})
     // .populate('owner')
     .then(pokemon => {
       return pokemon.map(pokemon => pokemon.toObject())
     })
     .then(pokemon => {
-      res.status(201).json({ pokemon: pokemon })
+      res.status(201).json({ pokemon })
     })
     .catch(next)
 })
