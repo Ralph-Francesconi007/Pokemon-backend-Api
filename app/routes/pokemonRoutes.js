@@ -13,19 +13,21 @@ const passport = require('passport')
 // handle404 error
 const handle404 = require('./../../lib/custom_errors')
 
+const customErrors = require('../../lib/custom_errors')
+
 const removeBlanks = require('../../lib/remove_blank_fields')
+
+const requireOwnership = customErrors.requireOwnership
 
 // require Token
 const requireToken = passport.authenticate('bearer', { session: false })
 
 // Create router
 router.post('/pokemon', requireToken, (req, res, next) => {
-  // extract the pokemon from request body
-  const pokemonData = req.body.pokemon
   req.body.pokemon.owner = req.user.id
 
   // use our Pokemon model
-  Pokemon.create(pokemonData)
+  Pokemon.create(req.body.pokemon)
   // pokemon created successfully
     .then(pokemon => res.status(201).json({ pokemon: pokemon.toObject() }))
     // Create error
@@ -36,10 +38,13 @@ router.post('/pokemon', requireToken, (req, res, next) => {
 router.get('/pokemon', requireToken, (req, res, next) => {
   // const pokemonData = req.body.pokemon
 
-  Pokemon.find()
-    .populate('owner')
+  Pokemon.find({owner: req.user.id})
+    // .populate('owner')
     .then(pokemon => {
-      res.status(201).json({ pokemon })
+      return pokemon.map(pokemon => pokemon.toObject())
+    })
+    .then(pokemon => {
+      res.status(201).json({ pokemon: pokemon })
     })
     .catch(next)
 })
@@ -47,23 +52,26 @@ router.get('/pokemon', requireToken, (req, res, next) => {
 // Show router
 router.get('/pokemon/:id', requireToken, (req, res, next) => {
   const id = req.params.id
-  const pokemonData = req.body.pokemon
 
   Pokemon.findById(id)
     .populate('owner')
-    .then(pokemon => handle404(pokemon))
+    .then(handle404)
+    .then(pokemon => res.status(200).json({ pokemon: pokemon.toObject() }))
     .catch(next)
 })
 
 // Update router
-router.patch('/pokemon/:id', requireToken, (req, res, next) => {
+router.patch('/pokemon/:id', requireToken, removeBlanks, (req, res, next) => {
   const id = req.params.id
-  const pokemonData = req.body.pokemon
+  delete req.body.pokemon.owner
 
   Pokemon.findById(id)
-    .populate('owner')
-    .then(pokemon => pokemon.updateOne(pokemonData))
-    .then(pokemon => res.json({ pokemon }))
+    .then(handle404)
+    .then(pokemon => {
+      requireOwnership(req, pokemon)
+      return pokemon.updateOne(req.body.pokemon)
+    })
+    .then(() => res.sendStatus(204))
     .catch(next)
 })
 
@@ -73,7 +81,10 @@ router.delete('/pokemon/:id', requireToken, (req, res, next) => {
 
   Pokemon.findById(id)
     .then(handle404)
-    .then(pokemon => pokemon.deleteOne())
+    .then(pokemon => {
+      requireOwnership(req, pokemon)
+      pokemon.deleteOne()
+    })
     .then(() => res.sendStatus(204))
     .catch(next)
 })
