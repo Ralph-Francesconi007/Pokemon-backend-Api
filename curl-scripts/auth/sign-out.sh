@@ -1,6 +1,6 @@
 #!/bin/bash
 
-API="http://localhost:4741"
+API="https://vast-dusk-11166.herokuapp.com/"
 URL_PATH="/sign-out"
 
 curl "${API}${URL_PATH}/" \
