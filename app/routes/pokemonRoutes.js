@@ -24,10 +24,8 @@ const requireToken = passport.authenticate('bearer', { session: false })
 
 // Create router
 router.post('/pokemon', requireToken, (req, res, next) => {
-  req.body.owner = req.user._id
-  console.log('request body is', req.body)
+  req.body.pokemon.owner = req.user._id
   const pokemonData = req.body.pokemon
-  console.log('pokemonData is', pokemonData)
 
   // use our Pokemon model
   Pokemon.create(pokemonData)
@@ -56,6 +54,7 @@ router.get('/pokemon', requireToken, (req, res, next) => {
 // Show router
 router.get('/pokemon/:id', requireToken, (req, res, next) => {
   const id = req.params.id
+  console.log(req.params)
 
   Pokemon.findById(id)
     .populate('owner')

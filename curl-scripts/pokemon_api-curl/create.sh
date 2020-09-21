@@ -1,4 +1,4 @@
-API="https://git.heroku.com/vast-dusk-11166.git"
+API="http://localhost:4741"
 URL_PATH="/pokemon"
 
 curl "${API}${URL_PATH}" \
