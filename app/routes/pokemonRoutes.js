@@ -31,7 +31,6 @@ router.post('/pokemon', requireToken, (req, res, next) => {
   Pokemon.create(pokemonData)
   // pokemon created successfully
     .then(pokemon => {
-      console.log('pokemon is', pokemon)
       res.status(201).json({ pokemon })
     })
     // Create error
@@ -54,7 +53,6 @@ router.get('/pokemon', requireToken, (req, res, next) => {
 // Show router
 router.get('/pokemon/:id', requireToken, (req, res, next) => {
   const id = req.params.id
-  console.log(req.params)
 
   Pokemon.findById(id)
     .populate('owner')
@@ -66,13 +64,16 @@ router.get('/pokemon/:id', requireToken, (req, res, next) => {
 // Update router
 router.patch('/pokemon/:id', requireToken, removeBlanks, (req, res, next) => {
   const id = req.params.id
+  const pokemonData = req.body.pokemon
   delete req.body.pokemon.owner
+  console.log(pokemonData)
 
   Pokemon.findById(id)
     .then(handle404)
     .then(pokemon => {
       requireOwnership(req, pokemon)
-      return pokemon.updateOne(req.body.pokemon)
+      console.log(pokemonData)
+      pokemon.updateOne(pokemonData)
     })
     .then(() => res.sendStatus(204))
     .catch(next)
