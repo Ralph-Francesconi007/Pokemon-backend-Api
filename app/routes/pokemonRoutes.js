@@ -67,8 +67,8 @@ router.patch('/pokemon/:id', requireToken, removeBlanks, (req, res, next) => {
     .then(handle404)
     .then(pokemon => {
       requireOwnership(req, pokemon)
-      console.log(pokemon)
-      return pokemon.updateOne(req.body)
+      console.log(req.body)
+      return pokemon.updateOne(req.body.pokemon)
     })
     .then(pokemon => res.json({ pokemon }))
     .catch(next)
