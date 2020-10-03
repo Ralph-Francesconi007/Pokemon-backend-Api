@@ -26,7 +26,6 @@ const requireToken = passport.authenticate('bearer', { session: false })
 router.post('/pokemon', requireToken, (req, res, next) => {
   req.body.pokemon.owner = req.user._id
   const pokemonData = req.body.pokemon
-  console.log(pokemonData)
   // use our Pokemon model
   Pokemon.create(pokemonData)
   // pokemon created successfully
@@ -67,7 +66,6 @@ router.patch('/pokemon/:id', requireToken, removeBlanks, (req, res, next) => {
     .then(handle404)
     .then(pokemon => {
       requireOwnership(req, pokemon)
-      console.log(req.body)
       return pokemon.updateOne(req.body.pokemon)
     })
     .then(pokemon => res.json({ pokemon }))
