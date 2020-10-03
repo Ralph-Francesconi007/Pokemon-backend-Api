@@ -9,10 +9,10 @@ With this project, I took my time planning my time better and making better use 
   - I would like to update my main Pokemon schema so that I can add more fields to the Pokemon itself.
 
 # Technologies Used
-1.Javascript
-2.Express
-3.Mongoose
-4.MongoDB
+1. Javascript
+2. Express
+3. Mongoose
+4. MongoDB
 
 # ERD diagram
-(https://i.imgur.com/1aTzYpS.jpg)
+[!ERD](https://i.imgur.com/1aTzYpS.jpg)
