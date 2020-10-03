@@ -15,4 +15,4 @@ With this project, I took my time planning my time better and making better use 
 4. MongoDB
 
 # ERD diagram
-[!Entity Relationship Diagram](https://i.imgur.com/1aTzYpS.jpg)
+[!Entity Relationship Diagram](https://i.imgur.com/OcehoTH.jpg)
