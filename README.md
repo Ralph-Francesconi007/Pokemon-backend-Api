@@ -15,4 +15,4 @@ With this project, I took my time planning my time better and making better use 
 4. MongoDB
 
 # ERD diagram
-[!ERD](https://i.imgur.com/1aTzYpS.jpg)
+[!WireFrame](https://i.imgur.com/1aTzYpS.jpg)
