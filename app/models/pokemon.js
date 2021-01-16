@@ -18,6 +18,14 @@ const pokemonSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  strengths: {
+    type: String,
+    required: true
+  },
+  weaknesses: {
+    type: String,
+    required: true
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
