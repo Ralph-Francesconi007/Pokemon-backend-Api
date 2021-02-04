@@ -4,6 +4,10 @@ const mongoose = require('mongoose')
 // Create new Pokemon Schema
 const pokemonSchema = new mongoose.Schema({
   // Name part of Schema should have be string and required
+  pokemonImage: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true
